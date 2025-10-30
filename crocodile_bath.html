@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小鳄鱼爱洗澡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bubbles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: rise 8s infinite ease-in;
+        }
+
+        @keyframes rise {
+            to {
+                bottom: 110%;
+                opacity: 0;
+            }
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #4a90e2;
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .subtitle {
+            color: #7b68ee;
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .main-crocodile {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .crocodile-emoji {
+            font-size: 8rem;
+            animation: float 3s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .bath-scene {
+            background: linear-gradient(180deg, #87ceeb 0%, #4dd0e1 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bathtub {
+            background: white;
+            border-radius: 50% 50% 40% 40%;
+            width: 300px;
+            height: 200px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .water {
+            background: linear-gradient(180deg, rgba(100, 200, 255, 0.6), rgba(64, 224, 208, 0.8));
+            border-radius: 50% 50% 40% 40%;
+            width: 100%;
+            height: 70%;
+            position: absolute;
+            bottom: 0;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.95); }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: #4a90e2;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .emoji-large {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .fun-fact {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: white;
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="bubbles" id="bubbles"></div>
+
+    <header>
+        <h1>🐊 小鳄鱼爱洗澡 🛁</h1>
+        <p class="subtitle">一起来享受快乐的洗澡时光！</p>
+    </header>
+
+    <div class="container">
+        <div class="main-crocodile">
+            <div class="crocodile-emoji">🐊</div>
+            <h2 style="color: #4a90e2; margin: 1rem 0;">欢迎来到小鳄鱼的洗澡世界</h2>
+            <p style="color: #666; font-size: 1.1rem; line-height: 1.8;">
+                小鳄鱼最喜欢洗澡啦！温暖的水，软软的泡泡，还有可爱的小黄鸭🦆<br>
+                让我们一起学习如何让洗澡变得更加有趣吧！
+            </p>
+            
+            <div class="bath-scene">
+                <div class="bathtub">
+                    <div class="water"></div>
+                    <div style="position: absolute; top: 30%; left: 50%; transform: translateX(-50%); font-size: 3rem;">🐊</div>
+                </div>
+            </div>
+
+            <button onclick="playSound()">🎵 播放洗澡歌</button>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <span class="emoji-large">🧼</span>
+                <h3>洗澡必备</h3>
+                <p>香香的沐浴露、柔软的毛巾、可爱的小黄鸭，还有最重要的——开心的心情！</p>
+            </div>
+
+            <div class="card">
+                <span class="emoji-large">💧</span>
+                <h3>水温刚刚好</h3>
+                <p>不要太热也不要太冷，温温的水最舒服啦！就像妈妈的拥抱一样温暖。</p>
+            </div>
+
+            <div class="card">
+                <span class="emoji-large">🎵</span>
+                <h3>唱歌真快乐</h3>
+                <p>洗澡的时候唱唱歌，时间过得特别快！小鳄鱼最喜欢唱"洗刷刷洗刷刷"～</p>
+            </div>
+
+            <div class="card">
+                <span class="emoji-large">✨</span>
+                <h3>泡泡好多呀</h3>
+                <p>泡泡堆得像棉花糖一样高，软软的、白白的，摸起来滑溜溜的好好玩！</p>
+            </div>
+
+            <div class="card">
+                <span class="emoji-large">🦆</span>
+                <h3>小黄鸭好朋友</h3>
+                <p>洗澡的时候不孤单，小黄鸭陪着一起玩水，嘎嘎嘎～</p>
+            </div>
+
+            <div class="card">
+                <span class="emoji-large">🌟</span>
+                <h3>洗完真舒服</h3>
+                <p>洗完澡香香的、干干净净的，整个鳄鱼都亮晶晶！感觉自己棒棒哒！</p>
+            </div>
+        </div>
+
+        <div class="fun-fact">
+            <h3 style="margin-bottom: 1rem;">🎈 有趣小知识 🎈</h3>
+            <p>真正的鳄鱼虽然生活在水里，但它们可不爱"洗澡"哦！<br>
+            不过我们的小鳄鱼超级爱干净，每天都要洗香香呢！</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>🐊 让我们一起养成爱洗澡的好习惯吧！ 🛁</p>
+        <p style="margin-top: 0.5rem; opacity: 0.8;">© 2025 小鳄鱼爱洗澡</p>
+    </footer>
+
+    <script>
+        // 创建漂浮的泡泡
+        function createBubbles() {
+            const bubblesContainer = document.getElementById('bubbles');
+            for (let i = 0; i < 20; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                const size = Math.random() * 60 + 20;
+                bubble.style.width = size + 'px';
+                bubble.style.height = size + 'px';
+                bubble.style.left = Math.random() * 100 + '%';
+                bubble.style.animationDelay = Math.random() * 8 + 's';
+                bubble.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                bubblesContainer.appendChild(bubble);
+            }
+        }
+
+        function playSound() {
+            alert('🎵 洗刷刷洗刷刷～ 🐊\n小鳄鱼爱洗澡，洗得干干净净！\n（这里可以添加真实的音频文件哦）');
+        }
+
+        createBubbles();
+    </script>
+</body>
+</html>
